@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="PersistenciaTP" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <!-- Definicion de Clases -->
+    <class>models.entities.AnioFabricacion</class>
+    <class>models.entities.Cliente</class>
+    <class>models.entities.CondicionIVA</class>
+    <class>models.entities.Cuota</class>
+    <class>models.entities.DatosPoliza</class>
+    <class>models.entities.Domicilio</class>
+    <class>models.entities.Empleado</class>
+    <class>models.entities.EstadoCivil</class>
+    <class>models.entities.Localidad</class>
+    <class>models.entities.Marca</class>
+    <class>models.entities.Modelo</class>
+    <class>models.entities.Pago</class>
+    <class>models.entities.Pais</class>
+    <class>models.entities.Persona</class>
+    <class>models.entities.Poliza</class>
+    <class>models.entities.Provincia</class>
+    <class>models.entities.TipoCobertura</class>
+    <class>models.entities.TipoDocumento</class>
+    <class>models.entities.Vehiculo</class>
+    <!-- Configuración de PostgreSQL & pgAdmin -->
+    <properties>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/postgres"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="0000"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="eclipselink.weaving" value="false"/>
+    </properties>
+  </persistence-unit>
+</persistence>
