@@ -1,6 +1,8 @@
 package controllers;
 
 import dao.ClienteDAOImpl;
+import dto.ClienteDTO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,9 +16,33 @@ public class GestorCliente {
     
     ClienteDAOImpl clienteImpl;
     
-    public List<Cliente> mostrarCliente (String numeroCliente) {
+    public List<ClienteDTO> mostrarCliente (String numeroCliente) {
         clienteImpl = new ClienteDAOImpl(manager);
-        return clienteImpl.buscarByID(numeroCliente);
+        List<Cliente> clientes = clienteImpl.buscarByID(numeroCliente);
+        List<ClienteDTO> clientesDTO = new ArrayList();
+        
+        for(Cliente c: clientes){
+            ClienteDTO cdto = new ClienteDTO();
+            cdto.setNroCliente(c.getNumeroCliente());
+            cdto.setNombre(c.getNombre());
+            cdto.setApellido(c.getApellido());
+            cdto.setTipoDoc(c.getTipoDocumento().getEspecificacion());
+            cdto.setNroDoc(c.getNumeroDocumento());
+            
+            clientesDTO.add(cdto);
+        }
+        
+        return clientesDTO;
+    }
+    
+    public Cliente buscar(ClienteDTO cdto){
+        Cliente c;
+        clienteImpl = new ClienteDAOImpl(manager);
+        
+        //Falta crear un metodo public Cliente buscar(ClienteDTO){} en ClienteDTOimplementacion -> que devuelva un solo cliente que cumpla con todas los atributos del ClienteDTO
+        //c = clienteImpl.buscar(cdto);
+        
+        return c;
     }
     
     /*public List<Provincia> mostrarProvincia () {

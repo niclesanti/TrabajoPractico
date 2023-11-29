@@ -2,6 +2,7 @@ package views;
 
 import controllers.GestorCliente;
 import controllers.GestorPoliza;
+import dto.ClienteDTO;
 import dto.DatosPolizaDTO;
 import dto.HijoDTO;
 import dto.VehiculoDTO;
@@ -33,6 +34,7 @@ public class MenuAltaPoliza1 extends javax.swing.JFrame {
     private EntityManager entityManager;
     GestorPoliza gestorPoliza;
     GestorCliente gestorCliente;
+    Cliente cliente;
     
     
     public MenuAltaPoliza1() {
@@ -48,6 +50,18 @@ public class MenuAltaPoliza1 extends javax.swing.JFrame {
         this.mostrarNumeroSiniestro();
         this.mostrarSexo();
         this.mostrarEstadoCivil();
+    }
+    
+    public MenuAltaPoliza1(EntityManager entityManager, Cliente c) {
+        initComponents();
+        gestorPoliza = new GestorPoliza();
+        gestorCliente = new GestorCliente();
+        this.mostrarProvincia();
+        this.mostrarMarca();
+        this.mostrarNumeroSiniestro();
+        this.mostrarSexo();
+        this.mostrarEstadoCivil();
+        this.cliente = c;
     }
     
     // Mostrar los valores de los Drop-Down List
@@ -361,6 +375,12 @@ public class MenuAltaPoliza1 extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel21.setText("Patente:");
 
+        txtMotor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMotorActionPerformed(evt);
+            }
+        });
+
         txtSumaAsegurada.setEditable(false);
         txtSumaAsegurada.setText("100000");
 
@@ -465,7 +485,7 @@ public class MenuAltaPoliza1 extends javax.swing.JFrame {
                                         .addComponent(jLabel23))
                                     .addGap(18, 18, 18)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtSumaAsegurada, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                                        .addComponent(txtSumaAsegurada, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
                                         .addComponent(txtKmAnio))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -771,14 +791,7 @@ public class MenuAltaPoliza1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void txtBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarClienteActionPerformed
-        try {
-            //Probar si funciona esto
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    new BuscarCliente().setVisible(true);
-                }
-            });
+        /*try {
             List<Cliente> cliente = gestorCliente.mostrarCliente("1231");
             TipoDocumento documento = cliente.get(0).getTipoDocumento();
             Domicilio domicilio = cliente.get(0).getDomicilio();
@@ -788,7 +801,24 @@ public class MenuAltaPoliza1 extends javax.swing.JFrame {
             txtDomicilio.setText(domicilio.getCalle() + " " + domicilio.getNumero());
         }  catch (Exception e) {
             Util.mensajeError("Error", e.getMessage());
-        }
+        }*/
+        try{
+            //Probar si funciona esto :)
+            //Cliente c;
+            JFrame buscarClienteJframe = new BuscarCliente(entityManager);
+            buscarClienteJframe.setVisible(true);
+            buscarClienteJframe.setLocationRelativeTo(null);
+            
+            //Aca deberiamos hacer las asignaciones que estan comentadas arriba pero con el cliente que obtuvimos
+            TipoDocumento documento = this.cliente.getTipoDocumento();
+            Domicilio domicilio = this.cliente.getDomicilio();
+            txtNumeroCliente.setText(this.cliente.getNumeroCliente() + "");
+            txtDocumento.setText(documento.getEspecificacion() + " / " + this.cliente.getNumeroDocumento());
+            txtApellidoNombre.setText(this.cliente.getApellido() + ", " + this.cliente.getNombre());
+            txtDomicilio.setText(domicilio.getCalle() + " " + domicilio.getNumero());
+            
+        }catch (Exception e) {
+            Util.mensajeError("Error", e.getMessage());
     }//GEN-LAST:event_txtBuscarClienteActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
@@ -873,6 +903,10 @@ public class MenuAltaPoliza1 extends javax.swing.JFrame {
             txtAnioFabricacion.addItem("Seleccionar");
         }
     }//GEN-LAST:event_txtModeloItemStateChanged
+
+    private void txtMotorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMotorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMotorActionPerformed
         
     /**
      * @param args the command line arguments

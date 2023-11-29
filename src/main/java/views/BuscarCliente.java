@@ -5,20 +5,43 @@
 package views;
 
 import Mappers.Util;
+import controllers.GestorCliente;
+import dto.ClienteDTO;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import models.entities.Cliente;
 
 /**
  *
  * @author Santi Nicle
  */
 public class BuscarCliente extends javax.swing.JFrame {
-
+    private EntityManager entityManager;
+    private ClienteDTO cliente;
+    GestorCliente gestorCliente;
+    private List<ClienteDTO> clientesBusqueda;
+    
     /**
      * Creates new form NewJFrame
+     * @param entityManager
      */
-    public BuscarCliente() {
+    public BuscarCliente(EntityManager entityManager) {
         initComponents();
+        gestorCliente = new GestorCliente();
     }
 
+    public ClienteDTO getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteDTO cliente) {
+        this.cliente = cliente;
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,7 +133,7 @@ public class BuscarCliente extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -270,6 +293,7 @@ public class BuscarCliente extends javax.swing.JFrame {
 
     private void jTextNroClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNroClienteActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextNroClienteActionPerformed
 
     private void jTextApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextApellidoActionPerformed
@@ -281,12 +305,51 @@ public class BuscarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextNroDocActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        // TODO add your handling code here:
+
+        try{
+            String nroCliente = (String) jTextNroCliente.getText();
+            String nombre = (String) jTextNombre.getText();
+            String apellido = (String) jTextApellido.getText();
+            String nroDoc = (String) jTextNroDoc.getText();
+            String tipoDoc = (String) jComboBoxTipoDoc.getSelectedItem();
+
+        
+            this.cliente.setNroCliente(Integer.parseInt(nroCliente));
+            this.cliente.setNombre(nombre);
+            this.cliente.setApellido(apellido);
+            this.cliente.setNroDoc(nroDoc);
+            this.cliente.setTipoDoc(tipoDoc);
+        
+            this.clientesBusqueda = this.gestorCliente.mostrarCliente(nroCliente);
+            
+            DefaultTableModel TablaClientes = (DefaultTableModel) jTableClientes.getModel();
+            for (ClienteDTO c : this.clientesBusqueda) {
+                Object[] Fila = {Integer.toString(c.getNroCliente()), c.getNombre(), c.getApellido(), c.getTipoDoc(), c.getNroDoc()};
+                TablaClientes.addRow(Fila);
+            }
+            
+        }catch(Exception e) {
+            Util.mensajeError("Error", e.getMessage());
+        }
+        
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        dispose();
+
+        try{
+            ClienteDTO cdto = this.clientesBusqueda.get(jTableClientes.getSelectedRow());
+            Cliente c = gestorCliente.buscar(cdto);
+            //No se como pasar este cliente c a la Interfaz 1
+            JFrame pantalla;
+            pantalla = new MenuAltaPoliza1(entityManager,c);
+            this.setVisible(false);
+            pantalla.setVisible(true);
+            pantalla.setLocationRelativeTo(null);
+            this.dispose();
+        }catch(Exception e) {
+            Util.mensajeError("Error", e.getMessage());
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

@@ -23,7 +23,7 @@ public class MenuAltaPoliza3 extends javax.swing.JFrame {
     DatosPolizaDTO datosPolizaDTO;
     VehiculoDTO vehiculoDTO;
     
-    public MenuAltaPoliza3() {
+    public MenuAltaPoliza3(EntityManager entityManager) {
         initComponents();
         mostrarDatos();
     }
