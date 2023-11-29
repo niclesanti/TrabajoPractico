@@ -151,7 +151,7 @@
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtSumaAsegurada" pref="71" max="32767" attributes="0"/>
+                                          <Component id="txtSumaAsegurada" pref="87" max="32767" attributes="0"/>
                                           <Component id="txtKmAnio" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>

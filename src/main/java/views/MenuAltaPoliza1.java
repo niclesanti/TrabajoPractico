@@ -772,6 +772,13 @@ public class MenuAltaPoliza1 extends javax.swing.JFrame {
 
     private void txtBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarClienteActionPerformed
         try {
+            //Probar si funciona esto
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new BuscarCliente().setVisible(true);
+                }
+            });
             List<Cliente> cliente = gestorCliente.mostrarCliente("1231");
             TipoDocumento documento = cliente.get(0).getTipoDocumento();
             Domicilio domicilio = cliente.get(0).getDomicilio();
