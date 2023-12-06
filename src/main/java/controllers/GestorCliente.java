@@ -16,9 +16,9 @@ public class GestorCliente {
     
     ClienteDAOImpl clienteImpl;
     
-    public List<ClienteDTO> mostrarCliente (String numeroCliente) {
+    public List<ClienteDTO> mostrarCliente (ClienteDTO cDTO) {
         clienteImpl = new ClienteDAOImpl(manager);
-        List<Cliente> clientes = clienteImpl.buscarByID(numeroCliente);
+        List<Cliente> clientes = clienteImpl.buscar(cDTO);
         List<ClienteDTO> clientesDTO = new ArrayList();
         
         for(Cliente c: clientes){
@@ -38,9 +38,9 @@ public class GestorCliente {
     public Cliente buscar(ClienteDTO cdto){
         Cliente c;
         clienteImpl = new ClienteDAOImpl(manager);
-        
+        List<Cliente> listaClientes = clienteImpl.buscar(cdto);
         //Falta crear un metodo public Cliente buscar(ClienteDTO){} en ClienteDTOimplementacion -> que devuelva un solo cliente que cumpla con todas los atributos del ClienteDTO
-        //c = clienteImpl.buscar(cdto);
+        c = listaClientes.get(0);
         
         return c;
     }

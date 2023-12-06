@@ -320,7 +320,7 @@ public class BuscarCliente extends javax.swing.JFrame {
             this.cliente.setNroDoc(nroDoc);
             this.cliente.setTipoDoc(tipoDoc);
         
-            this.clientesBusqueda = this.gestorCliente.mostrarCliente(nroCliente);
+            this.clientesBusqueda = this.gestorCliente.mostrarCliente(cliente);
             
             DefaultTableModel TablaClientes = (DefaultTableModel) jTableClientes.getModel();
             for (ClienteDTO c : this.clientesBusqueda) {

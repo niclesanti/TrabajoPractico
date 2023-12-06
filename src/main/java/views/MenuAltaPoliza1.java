@@ -34,7 +34,7 @@ public class MenuAltaPoliza1 extends javax.swing.JFrame {
     private EntityManager entityManager;
     GestorPoliza gestorPoliza;
     GestorCliente gestorCliente;
-    Cliente cliente;
+    Cliente cliente; //deberia guardar el cliente que devuelve buscar cliente
     
     
     public MenuAltaPoliza1() {
@@ -808,7 +808,9 @@ public class MenuAltaPoliza1 extends javax.swing.JFrame {
             JFrame buscarClienteJframe = new BuscarCliente(entityManager);
             buscarClienteJframe.setVisible(true);
             buscarClienteJframe.setLocationRelativeTo(null);
+            /**Cliente c = buscarClienteJframe.getCliente();**/
             
+
             //Aca deberiamos hacer las asignaciones que estan comentadas arriba pero con el cliente que obtuvimos
             TipoDocumento documento = this.cliente.getTipoDocumento();
             Domicilio domicilio = this.cliente.getDomicilio();

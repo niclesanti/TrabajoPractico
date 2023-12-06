@@ -1,5 +1,6 @@
 package dao;
 
+import dto.ClienteDTO;
 import java.util.Collections;
 import models.entities.Cliente;
 import java.util.List;
@@ -21,13 +22,54 @@ public class ClienteDAOImpl implements ClienteDAO {
     }
 
     @Override
-    public List<Cliente> buscarAll () {
+    /*public List<Cliente> buscarAll () {
         String consulta = "SELECT c FROM Cliente c";
         TypedQuery<Cliente> query = (TypedQuery<Cliente>) entityManager.createQuery(consulta);
         return query.getResultList();
+    }*/
+    //NROCLIENTE NOMBRE APELLIDO DNI TIPODOC 
+    
+    public List<Cliente> buscar(ClienteDTO cDTO){
+       String consulta = "SELECT * FROM Cliente c WHERE 1=1"; //ver si se concatena con otra tabla
+        
+       if(cDTO.getNroCliente()!=0 ){ //revisar que sea vacia o nula
+           String nro = String.valueOf(cDTO.getNroCliente());
+           consulta.concat(" AND ");
+           consulta.concat(nro);
+           consulta.concat(" = c.nroCliente"); //atributo de la tabla ver que este bien escrito
+       }
+       
+       if(cDTO.getNombre()!= null){
+           consulta.concat(" AND ");
+           consulta.concat(cDTO.getNombre());
+           consulta.concat(" = c.nombre"); //atributo de la tabla ver que este bien escrito
+       }
+       
+       if(cDTO.getApellido()!= null){
+           consulta.concat(" AND ");
+           consulta.concat(cDTO.getApellido());
+           consulta.concat(" = c.apellido"); //atributo de la tabla ver que este bien escrito
+       }
+       
+       if(cDTO.getTipoDoc()!= null){
+           consulta.concat(" AND ");
+           consulta.concat(cDTO.getTipoDoc());
+           consulta.concat(" = c.tipoDoc"); //atributo de la tabla ver que este bien escrito
+       }
+       
+       if(cDTO.getNroDoc()!= null){
+           consulta.concat(" AND ");
+           consulta.concat(cDTO.getNombre());
+           consulta.concat(" = c.nroDoc"); //atributo de la tabla ver que este bien escrito
+       }
+    
+       TypedQuery<Cliente> query = (TypedQuery<Cliente>) entityManager.createQuery(consulta);
+       return query.getResultList();
     }
     
-    @Override
+    
+    
+    /*@Override
     public List<Cliente> buscarByID(String id) {
         try {
             Integer identificador = Integer.parseInt(id);
@@ -39,7 +81,7 @@ public class ClienteDAOImpl implements ClienteDAO {
             Util.mensajeError("Error", "Ha ocurrido un error: " + e.getMessage());
             return Collections.emptyList();
         }
-    }
+    }*/
 
     @Override
     public void modificar(Cliente cliente) {
